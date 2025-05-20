@@ -1,0 +1,98 @@
+// C++ code
+//
+// Pin Definitions
+#define PIRPIN 3      // PIR sensor signal pin
+#define LDRPIN A0     // LDR sensor analog pin
+#define TMPPIN A1     // TMP36 sensor analog pin
+
+#define LED_HOME 10      // Green LED for Home mode
+#define LED_AWAY 11      // Red LED for Away mode
+#define LED_VACATION 12  // Blue LED for Vacation mode
+
+// Global Variables
+String inputString = "";
+bool authenticated = false;
+String currentMode = "None";
+
+void setup() {
+  // Start Serial communication for debugging and command input
+  Serial.begin(9600);
+  
+  // Sensor and LED pin modes
+  pinMode(PIRPIN, INPUT);
+  pinMode(LED_HOME, OUTPUT);
+  pinMode(LED_AWAY, OUTPUT);
+  pinMode(LED_VACATION, OUTPUT);
+  
+  // Prompt the user for authentication
+  Serial.println("Enter 'pass:1234' to authenticate:");
+}
+
+void loop() {
+  // Check if there's serial input available
+  if (Serial.available()) {
+    inputString = Serial.readStringUntil('\n');
+    inputString.trim();  // Remove any extra whitespace
+    handleInput(inputString);
+  }
+
+  // Once authenticated, send sensor data every 3 seconds
+  if (authenticated) {
+    sendSensorData();
+    delay(3000);  // Delay before next update
+  }
+}
+
+// This function handles incoming serial commands and mode changes
+void handleInput(String input) {
+  if (input == "pass:1234") {
+    authenticated = true;
+    Serial.println("Authenticated. Enter mode: Home, Away, Vacation");
+  } else if (!authenticated) {
+    Serial.println("Invalid passcode. Try again.");
+  } else if (authenticated) {
+    if (input == "Home" || input == "Away" || input == "Vacation") {
+      currentMode = input;
+      Serial.println("Mode set to: " + currentMode);
+      updateLEDs();   // Update LED status based on selected mode
+    } else {
+      Serial.println("Unknown command.");
+    }
+  }
+}
+
+// This function updates the LEDs based on the current operating mode
+void updateLEDs() {
+  // Each LED is turned on (HIGH) only if its corresponding mode is active.
+  digitalWrite(LED_HOME, currentMode == "Home" ? HIGH : LOW);
+  digitalWrite(LED_AWAY, currentMode == "Away" ? HIGH : LOW);
+  digitalWrite(LED_VACATION, currentMode == "Vacation" ? HIGH : LOW);
+}
+
+// This function reads sensor data and prints it to the Serial Monitor
+void sendSensorData() {
+  // Read the LDR sensor for light level (analog value)
+  int light = analogRead(LDRPIN);
+
+  // Read the PIR sensor for motion detection (digital value)
+  int motion = digitalRead(PIRPIN);
+
+  // Read the TMP36 sensor for temperature
+  int tempRaw = analogRead(TMPPIN);
+  // Convert the analog value to voltage
+  float voltage = tempRaw * (5.0 / 1023.0);
+  // Convert voltage to temperature in Celsius
+  float tempC = (voltage - 0.5) * 100.0;
+  
+  // Print all sensor data along with the current mode
+  Serial.println("---- Sensor Data ----");
+  Serial.println("Mode: " + currentMode);
+  Serial.print("Temperature: ");
+  Serial.print(tempC);
+  Serial.println(" °C");
+  Serial.print("Light Level: ");
+  Serial.println(light);
+  Serial.print("Motion Detected: ");
+  Serial.println(motion ? "Yes" : "No");
+  Serial.println("---------------------");
+}
