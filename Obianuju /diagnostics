@@ -1,0 +1,167 @@
+// C++ code
+
+// First prompt on Deepseek - Steps for creating circuit with Arduino controller 
+// that will enable the following: 
+//Advanced IoT Smart Home Ecosystem with Scenario Testing and Reporting
+
+#include <Wire.h>
+#include <LiquidCrystal_I2C.h>
+#include <RTClib.h>
+#include <Keypad.h>
+#include <DHT.h>
+
+// Initialize components
+LiquidCrystal_I2C lcd(0x27, 16, 2);
+RTC_DS3231 rtc;
+DHT dht[] = {DHT(A0, DHT22), DHT(A1, DHT22), DHT(A2, DHT22), DHT(A3, DHT22)};
+
+// Keypad setup
+const byte ROWS = 4;
+const byte COLS = 4;
+char keys[ROWS][COLS] = {
+  {'1','2','3','A'},
+  {'4','5','6','B'},
+  {'7','8','9','C'},
+  {'*','0','#','D'}
+};
+byte rowPins[ROWS] = {9, 8, 7, 6};
+byte colPins[COLS] = {5, 4, 3, 2};
+Keypad keypad = Keypad(makeKeymap(keys), rowPins, colPins, ROWS, COLS);
+
+
+
+
+// ERROR DETECTION MODULE
+
+
+// Error codes
+#define ERROR_SENSOR_FAIL 1
+#define ERROR_ACTUATOR_FAIL 2
+#define ERROR_COMM_FAIL 3
+#define ERROR_RTC_FAIL 4
+
+// Sensor monitoring variables
+unsigned long lastSensorUpdate[NUM_ROOMS] = {0};
+bool sensorFailure[NUM_ROOMS] = {false};
+
+// Actuator test variables
+bool actuatorTested[NUM_ROOMS] = {false};
+
+void checkSystemHealth() {
+  checkSensors();
+  checkActuators();
+  checkRTC();
+  checkComm();
+}
+
+void checkSensors() {
+  for (int room = 0; room < NUM_ROOMS; room++) {
+    // Check if sensor data is stale (>30 seconds)
+    if (millis() - lastSensorUpdate[room] > 30000) {
+      if (!sensorFailure[room]) {
+        logError(ERROR_SENSOR_FAIL, "Sensor failure in Room " + String(room+1));
+        sensorFailure[room] = true;
+      }
+    } else {
+      sensorFailure[room] = false;
+    }
+  }
+}
+
+void checkActuators() {
+  static unsigned long lastTestTime = 0;
+  
+  // Perform actuator test every hour
+  if (millis() - lastTestTime > 3600000) {
+    for (int room = 0; room < NUM_ROOMS; room++) {
+      testRoomActuators(room);
+    }
+    lastTestTime = millis();
+  }
+}
+
+void testRoomActuators(int room) {
+  // Test lights
+  digitalWrite(lightPins[room], HIGH);
+  delay(200);
+  if (digitalRead(lightPins[room]) != HIGH) {
+    logError(ERROR_ACTUATOR_FAIL, "Light failed in Room " + String(room+1));
+  }
+  digitalWrite(lightPins[room], LOW);
+
+  // Test fan (simulated with LED)
+  digitalWrite(fanPins[room], HIGH);
+  delay(200);
+  if (digitalRead(fanPins[room]) != HIGH) {
+    logError(ERROR_ACTUATOR_FAIL, "Fan failed in Room " + String(room+1));
+  }
+  digitalWrite(fanPins[room], LOW);
+
+  // Test heater (simulated with LED)
+  digitalWrite(heaterPins[room], HIGH);
+  delay(200);
+  if (digitalRead(heaterPins[room]) != HIGH) {
+    logError(ERROR_ACTUATOR_FAIL, "Heater failed in Room " + String(room+1));
+  }
+  digitalWrite(heaterPins[room], LOW);
+}
+
+void checkRTC() {
+  static unsigned long lastRTCCheck = 0;
+  static unsigned long lastValidTime = 0;
+  
+  if (millis() - lastRTCCheck > 60000) { // Check every minute
+    DateTime now = rtc.now();
+    
+    if (now.unixtime() == lastValidTime) {
+      logError(ERROR_RTC_FAIL, "RTC not updating!");
+    }
+    lastValidTime = now.unixtime();
+    lastRTCCheck = millis();
+  }
+}
+
+void checkComm() {
+  static unsigned long lastCommTime = 0;
+  
+  // For IoT simulation - check if serial data is received every 5 mins
+  if (millis() - lastCommTime > 300000) { 
+    logError(ERROR_COMM_FAIL, "No comms for 5 minutes");
+    lastCommTime = millis();
+  }
+}
+
+void logError(int errorCode, String message) {
+  // Display on LCD
+  lcd.clear();
+  lcd.setCursor(0, 0);
+  lcd.print("ERROR ");
+  lcd.print(errorCode);
+  lcd.setCursor(0, 1);
+  lcd.print(message.substring(0, 16)); // Fit to LCD width
+  
+  // Send to Serial Monitor (simulated IoT)
+  Serial.print("ERROR ");
+  Serial.print(errorCode);
+  Serial.print(": ");
+  Serial.println(message);
+  
+  // Visual alert
+  digitalWrite(ALARM_LED, HIGH);
+  tone(BUZZER_PIN, 2000, 500);
+  delay(1000);
+  digitalWrite(ALARM_LED, LOW);
+}
+
+// MODIFYING MAIN LOOP TO INCLUDE THIS:
+void loop() {
+  
+  // Update sensor timestamps when readings are taken
+  if (millis() - lastSensorUpdate[room] > 1000) { // Every second
+    readRoomSensors(room); // Your sensor reading function
+    lastSensorUpdate[room] = millis();
+  }
+  
+  checkSystemHealth(); // Run error checks
+  delay(100);
+}
