@@ -24,3 +24,6 @@ This project demonstrates the use of motion sensors and relay modules to manage 
 - The system checks for motion every second.
 - If no motion is detected for **10 minutes**, the system assumes all rooms are vacant and activates power-saving mode by turning off the LEDs (simulating turning off appliances).
 - If motion is detected again, the system resets the timer and restores power to the LEDs (simulating turning on appliances).
+
+Find the link for simulation below:
+https://www.tinkercad.com/things/2O8J5WONK5p-case-study-1-q3/editel?returnTo=https%3A%2F%2Fwww.tinkercad.com%2Fdashboard%2Fdesigns%2Fcircuits&sharecode=8Yrco2wnO2yWhgbT-BrrzI8vbwjitc5o4nDL2WVqWI0
