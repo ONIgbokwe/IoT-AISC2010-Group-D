@@ -1,0 +1,50 @@
+// Sensor pins
+const int tempPin = A0;      // TMP36 temperature sensor
+const int ldrPin = A1;       // LDR light sensor
+const int humidityPin = A2;  // Potentiometer (simulating humidity)
+
+// Mode
+String mode = "Away";        // Default mode
+
+void setup() {
+  Serial.begin(9600);
+  Serial.println("System Initialized. Type mode: Home, Away, or Vacation.");
+}
+
+void loop() {
+  // Read temperature
+  int tempReading = analogRead(tempPin);
+  float voltage = tempReading * (5.0 / 1023.0);
+  float temperatureC = (voltage - 0.5) * 100.0; // TMP36 formula
+
+  // Read light
+  int lightReading = analogRead(ldrPin);
+
+  // Read humidity (simulated by potentiometer)
+  int humidityReading = analogRead(humidityPin);
+  float humidityPercent = map(humidityReading, 0, 1023, 0, 100);
+
+  // Check for serial input to change mode
+  if (Serial.available() > 0) {
+    String input = Serial.readStringUntil('\n');
+    input.trim(); // Remove any newline or spaces
+
+    if (input == "Home" || input == "Away" || input == "Vacation") {
+      mode = input;
+    } else {
+      Serial.println("Invalid mode. Type Home, Away, or Vacation.");
+    }
+  }
+
+  // Print all sensor values + current mode
+  Serial.print("Temperature: ");
+  Serial.print(temperatureC);
+  Serial.print(" °C, Light: ");
+  Serial.print(lightReading);
+  Serial.print(", Humidity: ");
+  Serial.print(humidityPercent);
+  Serial.print(" %, Mode: ");
+  Serial.println(mode);
+
+  delay(1000); // Wait 1 second
+}
