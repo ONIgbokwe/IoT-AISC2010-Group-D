@@ -1,0 +1,55 @@
+int pirPin = 7;          // PIR sensor input
+int ldrPin = A0;         // LDR analog input
+int ledPin = 13;          // LED output
+int relayPin = 4;
+unsigned long lastMotionTime = 0;
+bool motionDetected = false;
+
+void setup()
+{
+ pinMode(pirPin, INPUT);
+ pinMode(relayPin, OUTPUT);
+ pinMode(ledPin, OUTPUT);
+ pinMode(ldrPin, INPUT);
+ Serial.begin(9600);
+}
+
+void loop()
+{
+ bool motion = digitalRead(pirPin);
+ int lightLevel = analogRead(ldrPin);
+ unsigned long currentTime = millis();
+  
+ if(motion){
+   lastMotionTime = currentTime;         // Reset timer
+   motionDetected=true;
+ } else{
+ 	motionDetected=false;
+ }
+ unsigned long timeDiff = millis()- lastMotionTime;
+ if(motionDetected){
+ 	digitalWrite(relayPin,HIGH);	 
+ }else if(timeDiff>=10000){
+ 	digitalWrite(relayPin,LOW);	 
+ }
+
+ if(motionDetected && lightLevel < 500)
+ {
+  digitalWrite(ledPin, HIGH);           // Turn ON LED
+ }
+
+ else if (timeDiff > 10000)
+ {
+  analogWrite(ledPin, 100);             // Dim LED using PWM (value 0–255)
+ }
+  
+ else if (lightLevel > 700 || timeDiff > 900000)
+ {
+  analogWrite(ledPin, 0);            // Turn OFF LED
+ }
+
+ Serial.println("LightLevel:"+ String(lightLevel));
+ delay(500); // Optional: To avoid flooding Serial
+}
+
+

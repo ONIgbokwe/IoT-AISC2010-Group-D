@@ -1,0 +1,112 @@
+// C++ code
+
+// First prompt on Deepseek - Steps for creating circuit with Arduino controller 
+// that will enable the following: 
+//Advanced IoT Smart Home Ecosystem with Scenario Testing and Reporting
+
+// Constants
+#define NUM_ROOMS 2  // Reduced for Tinkercad performance
+#define BAUD_RATE 9600
+
+// Error codes
+#define ERROR_SENSOR_FAIL 1
+#define ERROR_COMM_FAIL 2
+
+// Simulated Components (since some libraries aren't available)
+unsigned long currentTime = 0;
+
+// Pin Definitions (Tinkercad-friendly)
+const int lightPins[NUM_ROOMS] = {9, 10};
+const int pirPins[NUM_ROOMS] = {2, 3};
+const int ldrPins[NUM_ROOMS] = {A0, A1};
+
+// Alarm pins
+const int ALARM_LED = LED_BUILTIN;
+const int BUZZER_PIN = 4;
+
+// Timing variables
+unsigned long lastSensorUpdate[NUM_ROOMS] = {0};
+bool sensorFailure[NUM_ROOMS] = {false};
+
+void setup() {
+  Serial.begin(BAUD_RATE);
+  
+  // Initialize pins
+  for (int i = 0; i < NUM_ROOMS; i++) {
+    pinMode(lightPins[i], OUTPUT);
+    pinMode(pirPins[i], INPUT);
+    pinMode(ldrPins[i], INPUT);
+  }
+  
+  pinMode(ALARM_LED, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  
+  Serial.println("System Ready");
+}
+
+void loop() {
+  currentTime = millis();
+  
+  // Simulate sensor readings
+  for (int room = 0; room < NUM_ROOMS; room++) {
+    checkRoom(room);
+  }
+  
+  checkSystemHealth();
+  delay(100);
+}
+
+void checkRoom(int room) {
+  // Simulate motion detection
+  bool motion = digitalRead(pirPins[room]);
+  int lightLevel = analogRead(ldrPins[room]);
+  
+  // Basic lighting control
+  if (motion && lightLevel < 500) {
+    digitalWrite(lightPins[room], HIGH);
+    lastSensorUpdate[room] = currentTime;
+  } else {
+    digitalWrite(lightPins[room], LOW);
+  }
+}
+
+void checkSystemHealth() {
+  checkSensors();
+  checkComm();
+}
+
+void checkSensors() {
+  for (int room = 0; room < NUM_ROOMS; room++) {
+    if (currentTime - lastSensorUpdate[room] > 30000) { // 30s timeout
+      if (!sensorFailure[room]) {
+        logError(ERROR_SENSOR_FAIL, "Sensor Fail R" + String(room));
+        sensorFailure[room] = true;
+      }
+    } else {
+      sensorFailure[room] = false;
+    }
+  }
+}
+
+void checkComm() {
+  static unsigned long lastCommTime = 0;
+  
+  if (currentTime - lastCommTime > 300000) { // 5 minute timeout
+    logError(ERROR_COMM_FAIL, "No communication");
+    lastCommTime = currentTime;
+  }
+}
+
+void logError(int code, String msg) {
+  Serial.print("ERROR ");
+  Serial.print(code);
+  Serial.print(": ");
+  Serial.println(msg);
+  
+  // Visual/audio alert
+  digitalWrite(ALARM_LED, HIGH);
+  tone(BUZZER_PIN, 2000, 500);
+  delay(1000);
+  digitalWrite(ALARM_LED, LOW);
+  noTone(BUZZER_PIN);
+}
