@@ -69,7 +69,6 @@ void setup() {
   Serial.println("5. wind");
   Serial.println("6. storm");
   Serial.println();
-
   Serial.println("Enter your choice: (e.g., sunny, cloudy, rain, snow, wind, storm)");
 
 }
