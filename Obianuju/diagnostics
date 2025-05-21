@@ -1,18 +1,6 @@
 // C++ code
 
-Link to Simulation Video:  https://youtu.be/XGx-5GPraqo
-
-// First prompt on Deepseek - Steps for creating circuit with Arduino controller 
-// that will enable the following: 
-//Advanced IoT Smart Home Ecosystem with Scenario Testing and Reporting
-
-// C++ code
-
-// First prompt on Deepseek - Steps for creating circuit with Arduino controller 
-// that will enable the following: 
-//Advanced IoT Smart Home Ecosystem with Scenario Testing and Reporting
-
-// PINS CONFIGURATION (Match these with your Tinkercad wiring)
+// PINS CONFIGURATION 
 const int NUM_ROOMS = 2; // Reduced for Tinkercad stability
 
 // Sensor Pins
@@ -107,3 +95,12 @@ void triggerFault(int room) {
     delay(300);
   }
 }
+
+
+Link to Simulation Video:  https://youtu.be/XGx-5GPraqo
+
+// First prompt on DeepSeek - Steps for creating circuit with Arduino controller 
+// that will enable the following: 
+//Advanced IoT Smart Home Ecosystem with Scenario Testing and Reporting
+
+//Last prompt on DeepSeek is ldr photoresistor?
