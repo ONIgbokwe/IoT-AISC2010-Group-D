@@ -87,15 +87,10 @@ void loop() {
     // Reset all devices and brightness
 
     digitalWrite(fanPin, LOW);
-
     digitalWrite(heaterPin, LOW);
-
     digitalWrite(coolerPin, LOW);
-
     digitalWrite(humidifierPin, LOW);
-
     digitalWrite(buzzerPin, LOW);
-
     curtain.write(0);  // Default: open curtains
  
     // Control brightness and components based on weather
