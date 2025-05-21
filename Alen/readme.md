@@ -1,5 +1,6 @@
 #  2. Environmental Monitoring Simulation – Multi-Room (2 Rooms)
 
+![tinker_sim_short_gif](https://github.com/user-attachments/assets/2c3ff923-5fb1-42e0-9cbc-af0e5bed3e76)
 
 https://github.com/user-attachments/assets/3cf7bfef-16d8-4f59-b217-28d98c51855b
 
