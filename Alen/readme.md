@@ -1,7 +1,7 @@
 # Environmental Monitoring Simulation – Multi-Room (4 Rooms)
 
 Video URL : https://youtu.be/6MJSCUErtKM
-This project simulates a **multi-room environmental monitoring system** using an **Arduino Uno**. It demonstrates how to monitor and automatically control the **temperature and humidity of four rooms** using:
+<br>This project simulates a **multi-room environmental monitoring system** using an **Arduino Uno**. It demonstrates how to monitor and automatically control the **temperature and humidity of four rooms** using:
 
 - **TMP36 temperature sensors** (one for each room)
 - **Simulated humidity** values (in code, no sensors used)
