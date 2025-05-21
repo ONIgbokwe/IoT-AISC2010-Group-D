@@ -1,1 +1,1 @@
-Add your files here
+Simulation of Environmental Monitoring using Temperature sensor (TMP36) and Potentiometer (Humidity) for multi-rooms (2 rooms in this case). The circuit automatically controls simulated fans/heaters (using LEDs) based on predefined thresholds (e.g., heater turns on below 20°C, fan above 30°C).
