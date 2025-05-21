@@ -56,9 +56,3 @@ Video URL : https://youtu.be/6MJSCUErtKM
 5. **Serial Monitor** logs all values and control actions for verification.
 
 ---
-
-## 📺 LCD Display Format
-
-Each LCD shows 2 rooms:
-
-**LCD 1:**
