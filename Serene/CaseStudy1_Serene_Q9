@@ -228,7 +228,7 @@ void loop() {
       
       Serial.println("Fan : ON");
       Serial.println("Cooler : ON");
-      Serial.println("Curtain : Open");
+      Serial.println("Curtain : Closed");
       Serial.println("Heater : OFF");
       Serial.println("Humidifier : OFF ");
 
