@@ -14,12 +14,12 @@ Live Simulation : https://www.tinkercad.com/things/62OxKchC6fj-environmental-mon
 - Real-time monitoring of **temperature and humidity** for 2 rooms
 - **Automatic control** of fans and heaters based on thresholds:
 
-  - 🔥 Heater **ON** if temperature < 20°C  
-  - 🔥 Heater **OFF** if temperature > 25°C  
-  - 🌀 Fan **ON** if temperature > 30°C  
-  - 🌀 Fan **ON** if temperature > 25°C **and** humidity > 70%  
-  - 🌀 Fan **OFF** if temperature < 25°C **and** humidity < 40%  
-  - 🌀 Fan **ON** if humidity > 90%
+  - Heater **ON** if temperature < 20°C  
+  - Heater **OFF** if temperature > 25°C  
+  - Fan **ON** if temperature > 30°C  
+  - Fan **ON** if temperature > 25°C **and** humidity > 70%  
+  - Fan **OFF** if temperature < 25°C **and** humidity < 40%  
+  - Fan **ON** if humidity > 90%
 
 - LCD display shows **both rooms simultaneously** (`T:` for temperature, `H:` for humidity)
 - Serial Monitor logs **real-time fan/heater status** for each room
