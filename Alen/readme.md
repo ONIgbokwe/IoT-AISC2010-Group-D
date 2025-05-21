@@ -3,7 +3,7 @@
 This project simulates a **multi-room environmental monitoring system** using an Arduino Uno. It demonstrates how to monitor and control the temperature and humidity of **two rooms** using:
 
 - **TMP36 temperature sensors** (for each room)
-- **Potentiometers** to simulate humidity
+- **Potentiometers** to simulate humidity (for each room)
 - **LEDs** to represent fan and heater control
 - **I2C LCD display** to show real-time readings for both rooms
 
