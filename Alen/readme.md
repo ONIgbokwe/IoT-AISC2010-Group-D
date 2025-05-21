@@ -2,6 +2,8 @@
 
 ![tinker_sim_short_gify](https://github.com/user-attachments/assets/546f9e6e-1da1-4d50-9e3e-f0ffecabbb29)
 
+Video URL : https://youtu.be/2ViyU6eqrxk
+
 Live Simulation : https://www.tinkercad.com/things/62OxKchC6fj-environmental-monitoring-hvac-control?sharecode=Y49i-6hM7RdGHMtvykeewaLG6v7k1MxPvvfT0AiaxKA  <br><br> This project simulates a **multi-room environmental monitoring system** using an Arduino Uno. It demonstrates how to monitor and control the temperature and humidity of **two rooms** using:
 
 - **TMP36 temperature sensors** (for each room)
