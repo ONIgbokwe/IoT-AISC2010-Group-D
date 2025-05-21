@@ -1,55 +1,64 @@
-#  2. Environmental Monitoring Simulation – Multi-Room (2 Rooms)
+# Environmental Monitoring Simulation – Multi-Room (4 Rooms)
 
-![tinker_sim_short_gify](https://github.com/user-attachments/assets/546f9e6e-1da1-4d50-9e3e-f0ffecabbb29)
 
-Video URL : https://youtu.be/2ViyU6eqrxk
+This project simulates a **multi-room environmental monitoring system** using an **Arduino Uno**. It demonstrates how to monitor and automatically control the **temperature and humidity of four rooms** using:
 
-Live Simulation : https://www.tinkercad.com/things/62OxKchC6fj-environmental-monitoring-hvac-control?sharecode=Y49i-6hM7RdGHMtvykeewaLG6v7k1MxPvvfT0AiaxKA  <br><br> This project simulates a **multi-room environmental monitoring system** using an Arduino Uno. It demonstrates how to monitor and control the temperature and humidity of **two rooms** using:
-
-- **TMP36 temperature sensors** (for each room)
-- **Potentiometers** to simulate humidity (for each room)
-- **LEDs** to represent fan and heater control
-- **I2C LCD display** to show real-time readings for both rooms
+- **TMP36 temperature sensors** (one for each room)
+- **Simulated humidity** values (in code, no sensors used)
+- **LEDs** to represent fan and heater operation
+- **Two I2C LCD displays** to show real-time temperature and humidity data for all rooms
 
 ---
 
-##  Features
+## ✅ Features
 
-- Real-time monitoring of **temperature and humidity** for 2 rooms
-- **Automatic control** of fans and heaters based on thresholds:
+- Real-time monitoring of **temperature** (via TMP36) and **humidity** (randomized in code) for **4 rooms**
+- **Automatic control** of heater and fan per room based on environmental conditions:
 
-  - Heater **ON** if temperature < 20°C  
-  - Heater **OFF** if temperature > 25°C  
-  - Fan **ON** if temperature > 30°C  
-  - Fan **ON** if temperature > 25°C **and** humidity > 70%  
-  - Fan **OFF** if temperature < 25°C **and** humidity < 40%  
+  - Heater **ON** if temperature < 20 °C  
+  - Heater **OFF** if temperature > 25 °C  
+  - Fan **ON** if temperature > 30 °C  
+  - Fan **ON** if temperature > 25 °C **and** humidity > 70%  
+  - Fan **OFF** if temperature < 25 °C **and** humidity < 40%  
   - Fan **ON** if humidity > 90%
 
-- LCD display shows **both rooms simultaneously** (`T:` for temperature, `H:` for humidity)
-- Serial Monitor logs **real-time fan/heater status** for each room
+- **Dual LCDs**:
+  - LCD 1 displays Room 1 & Room 2 readings
+  - LCD 2 displays Room 3 & Room 4 readings
+- **Serial Monitor** logs exact temperature, humidity, and fan/heater status for all rooms
 
 ---
 
-##  Hardware Components
+## 🧩 Hardware Components
 
-- 1 × Arduino Uno  
-- 2 × TMP36 temperature sensors  
-- 2 × 10kΩ potentiometers (simulate humidity)  
-- 2 × Heater LEDs (e.g., red)  
-- 2 × Fan LEDs (e.g., green)  
-- 6 × 220Ω resistors  
-- 1 × I2C LCD (16x2)  
-- Breadboard + jumper wires
+| Component                    | Quantity | Purpose                      |
+|-----------------------------|----------|------------------------------|
+| Arduino Uno R3              | 1        | Main controller              |
+| TMP36 temperature sensors   | 4        | Real temperature input       |
+| Heater LEDs (e.g., red)     | 4        | Represent heater ON/OFF      |
+| Fan LEDs (e.g., blue/green) | 4        | Represent fan ON/OFF         |
+| 220Ω resistors              | 8        | For LEDs                     |
+| I2C LCD (16x2)              | 2        | Display Room 1–4 data        |
+| Breadboard + jumper wires   | –        | Connections                  |
 
----
-
-##  How It Works
-
-1. The TMP36 sensors provide real-time temperature data.
-2. Potentiometers simulate humidity values (0–100%).
-3. Fan and heater LEDs are controlled based on the logic conditions.
-4. A 16x2 I2C LCD displays current `T:` (Temperature) and `H:` (Humidity) for **Room 1** and **Room 2**.
-5. Serial Monitor logs include exact temperature, humidity, and device statuses.
+> 🔧 **Note**: Humidity is not sensed using a physical component. It is **simulated using random values in the code** to test HVAC behavior without needing humidity sensors.
 
 ---
 
+## ⚙️ How It Works
+
+1. Each **TMP36 sensor** provides real-time temperature input for one room.
+2. **Humidity values are randomly generated in software** between 30–100%.
+3. Based on the values, **heaters and fans are turned ON/OFF** using defined logic.
+4. **Two I2C LCDs** display:
+   - `T:` → Temperature (°C)
+   - `H:` → Humidity (%)
+5. **Serial Monitor** logs all values and control actions for verification.
+
+---
+
+## 📺 LCD Display Format
+
+Each LCD shows 2 rooms:
+
+**LCD 1:**
