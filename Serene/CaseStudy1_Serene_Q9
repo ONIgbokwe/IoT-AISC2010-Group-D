@@ -1,7 +1,5 @@
 #include <Wire.h>               // Required for I2C communication (LCD)
-
 #include <LiquidCrystal_I2C.h>  // For I2C LCD
-
 #include <Servo.h>              // For servo motor control
  
 // LCD setup (I2C Address: 0x27, 16 columns, 2 rows)
@@ -17,13 +15,9 @@ const int curtainServoPin = 9;
 // Pin Definitions for LEDs and Buzzer
 
 const int fanPin = 2;
-
 const int heaterPin = 4;
-
 const int coolerPin = 5;
-
 const int humidifierPin = 6;
-
 const int buzzerPin = 8;
  
 // Variables for Light Level
@@ -47,13 +41,9 @@ void setup() {
   // Set pins for output devices
 
   pinMode(fanPin, OUTPUT);
-
   pinMode(heaterPin, OUTPUT);
-
   pinMode(coolerPin, OUTPUT);
-
   pinMode(humidifierPin, OUTPUT);
-
   pinMode(buzzerPin, OUTPUT);
 
   // Initialize the servo motor for curtain simulation
@@ -71,21 +61,13 @@ void setup() {
   // Print weather options in Serial Monitor
 
   Serial.println("Please input one of the following weather conditions:");
-
   Serial.println("Options:");
-
   Serial.println("1. sunny");
-
   Serial.println("2. cloudy");
-
   Serial.println("3. rain");
-
   Serial.println("4. snow");
-
   Serial.println("5. wind");
-
   Serial.println("6. storm");
-
   Serial.println();
 
   Serial.println("Enter your choice: (e.g., sunny, cloudy, rain, snow, wind, storm)");
@@ -121,15 +103,10 @@ void loop() {
     if (weather == "sunny") {
 
       lightingLevel = "Low";
-
       digitalWrite(fanPin, HIGH);
-
       digitalWrite(coolerPin, HIGH);
-
       curtain.write(90);
-
       digitalWrite(heaterPin, LOW);
-
       digitalWrite(humidifierPin, LOW);
 
       Serial.println("Fan : ON");
@@ -143,15 +120,10 @@ void loop() {
     else if (weather == "cloudy") {
 
       lightingLevel = "Medium";
-
       digitalWrite(fanPin, LOW);
-
       digitalWrite(coolerPin, LOW);
-
       curtain.write(90);
-
       digitalWrite(heaterPin, HIGH);
-
       digitalWrite(humidifierPin, HIGH);
       
       Serial.println("Fan : OFF");
@@ -165,15 +137,10 @@ void loop() {
     else if (weather == "rain") {
 
       lightingLevel = "Medium";
-
       digitalWrite(fanPin, LOW);
-
       digitalWrite(coolerPin, LOW);
-
       curtain.write(0);
-
       digitalWrite(heaterPin, HIGH);
-
       digitalWrite(humidifierPin, LOW);
       
       Serial.println("Fan : OFF");
@@ -187,21 +154,13 @@ void loop() {
     else if (weather == "snow") {
 
       lightingLevel = "High";
-
       digitalWrite(fanPin, LOW);
-
       digitalWrite(coolerPin, LOW);
-
       curtain.write(90);
-
       digitalWrite(heaterPin, HIGH);
-
       digitalWrite(humidifierPin, HIGH);
-
       digitalWrite(buzzerPin, LOW);
-
       delay(1000);
-
       digitalWrite(buzzerPin, LOW);
       
       Serial.println("Fan : OFF");
@@ -215,15 +174,10 @@ void loop() {
     else if (weather == "wind") {
 
       lightingLevel = "Medium";
-
       digitalWrite(fanPin, LOW);
-
       digitalWrite(coolerPin, LOW);
-
       curtain.write(0);
-
       digitalWrite(heaterPin, LOW);
-
       digitalWrite(humidifierPin, LOW);
       
       Serial.println("Fan : ON");
@@ -237,21 +191,13 @@ void loop() {
     else if (weather == "storm") {
 
       lightingLevel = "Medium";
-
       digitalWrite(fanPin, LOW);
-
       digitalWrite(coolerPin, LOW);
-
       curtain.write(0);
-
       digitalWrite(heaterPin, HIGH);
-
       digitalWrite(humidifierPin, HIGH);
-
       digitalWrite(buzzerPin, HIGH);
-
       delay(1000);
-
       digitalWrite(buzzerPin, HIGH);
       
       Serial.println("Fan : OFF");
@@ -274,15 +220,10 @@ void loop() {
     // Update LCD display with the brightness level
 
     lcd.clear();
-
     lcd.setCursor(0, 0);
-
     lcd.print("Lighting: ");
-
     lcd.print(lightingLevel);
- 
     Serial.print("Weather set to: ");
-
     Serial.println(weather);
 
   }
