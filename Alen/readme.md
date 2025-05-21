@@ -1,6 +1,6 @@
 #  2. Environmental Monitoring Simulation – Multi-Room (2 Rooms)
 
-<video src='https://youtu.be/2ViyU6eqrxk' width=180/>
+<video src='https://youtu.be/2ViyU6eqrxk' width=180/> <br>
 
 Live Simulation : https://www.tinkercad.com/things/62OxKchC6fj-environmental-monitoring-hvac-control?sharecode=Y49i-6hM7RdGHMtvykeewaLG6v7k1MxPvvfT0AiaxKA  <br><br> This project simulates a **multi-room environmental monitoring system** using an Arduino Uno. It demonstrates how to monitor and control the temperature and humidity of **two rooms** using:
 
