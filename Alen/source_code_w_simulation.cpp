@@ -14,6 +14,10 @@ void setup() {
 
   lcd.begin(16, 2);
   lcd.setBacklight(HIGH);
+  lcd.setCursor(0, 0);
+  lcd.print("ENV. MONITORING");
+  lcd.setCursor(0, 1);
+  lcd.print("HVAC Control");
   Serial.begin(9600);
 
   randomSeed(analogRead(0)); // Seed randomness
@@ -55,6 +59,7 @@ void loop() {
     Serial.print(heaterState[i] ? "ON" : "OFF");
     Serial.print(" | Fan: ");
     Serial.println(fanState[i] ? "ON" : "OFF");
+    Serial.println("");
   }
 
   // --- LCD Display for Both Rooms ---
