@@ -1,0 +1,1 @@
+curl -X POST -H "Content-Tyoe: application/json" -d '{"sensor": !temp!, !value!: 22}' http://127.0,0,1:5050/sensor_data
